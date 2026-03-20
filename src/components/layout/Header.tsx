@@ -1,9 +1,8 @@
 'use client';
-
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from '.next/image';
 import { useState, useEffect } from 'react';
-import { ShoppingCart, Heart, Menu, X, LogIn, LogOut, UserCircle, User, ShoppingBag, Lock, Shield } from 'lucide-react';
+import { ShoppingCart, Heart, Menu, X, LogIn, LogOut, UserCircle, User, ShoppingBag, Lock } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCartStore, useWishlistStore } from '@/store/useStore';
@@ -28,8 +27,8 @@ type ActiveCoupon = {
 
 function couponToMarquee(c: ActiveCoupon): { text: string; code: string } {
   const val = parseFloat(String(c.value));
-  const discount = c.type === 'PERCENTAGE' ? `${val}% OFF` : `₹${val.toLocaleString('en-IN')} OFF`;
-  const min = c.minOrderValue ? ` on orders above ₹${parseFloat(String(c.minOrderValue)).toLocaleString('en-IN')}` : '';
+  const discount = c.type === 'PERCENTAGE' ? `${val}% OFF` : `Rs. ${val.toLocaleString('en-IN')} OFF`;
+  const min = c.minOrderValue ? ` on orders above Rs. ${parseFloat(String(c.minOrderValue)).toLocaleString('en-IN')}` : '';
   const text = c.description || `Flash Sale: Get Extra ${discount}${min}!`;
   return { text, code: c.code };
 }
@@ -79,20 +78,20 @@ export function Header() {
       <span key={repeat} className="inline-flex items-center">
         {!mounted || activeCoupons.length === 0 ? (
           <span className="inline-flex items-center gap-3 md:gap-6 px-4 md:px-8 text-xs md:text-sm font-medium tracking-wide">
-            <span>🚚 Free Delivery on Orders Above ₹999</span>
-            <span className="text-yellow-300">★</span>
+            <span>Free Delivery on Orders Above Rs. 999</span>
+            <span className="text-yellow-300">*</span>
             <span>Premium Quality Mattresses for Better Sleep</span>
-            <span className="text-yellow-300">★</span>
+            <span className="text-yellow-300">*</span>
           </span>
         ) : activeCoupons.map((c) => {
           const { text, code } = couponToMarquee(c);
           return (
             <span key={c.code} className="inline-flex items-center gap-3 md:gap-6 px-4 md:px-8 text-xs md:text-sm font-medium tracking-wide">
-              <span>🔥 {text}</span>
+              <span>Flash: {text}</span>
               <span className="bg-white text-[#1a2a6c] px-2 py-0.5 rounded font-bold text-xs">Code: {code}</span>
-              <span className="text-yellow-300">★</span>
-              <span>Free Delivery on Orders Above ₹999</span>
-              <span className="text-yellow-300">★</span>
+              <span className="text-yellow-300">*</span>
+            <span>Free Delivery on Orders Above Rs. 999</span>
+              <span className="text-yellow-300">*</span>
             </span>
           );
         })}
@@ -146,14 +145,14 @@ export function Header() {
                 )}
               </Link>
 
-              {/* Admin Icon — always visible, goes to admin login */}
-              <Link
+              {/* Admin Icon - always visible, goes to admin login */}
+              {/* <Link
                 href="/admin/login"
                 className="hidden lg:flex items-center justify-center w-9 h-9 rounded-full bg-[#092f75] hover:bg-[#092f75] transition shadow-sm"
                 title="Admin Panel"
               >
                 <Shield className="w-5 h-5 text-white" />
-              </Link>
+              </Link> */}
 
               {/* User / Auth */}
               {mounted && isLoggedIn() ? (
