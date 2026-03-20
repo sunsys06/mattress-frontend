@@ -1,6 +1,6 @@
-'use client';
+﻿'use client';
 import Link from 'next/link';
-import Image from '.next/image';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { ShoppingCart, Heart, Menu, X, LogIn, LogOut, UserCircle, User, ShoppingBag, Lock } from 'lucide-react';
 import { Button } from '../ui/Button';
@@ -279,3 +279,4 @@ export function Header() {
     </>
   );
 }
+
