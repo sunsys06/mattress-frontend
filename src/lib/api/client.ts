@@ -1,4 +1,6 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+﻿const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const normalizedApiUrl = rawApiUrl.replace(/\/+$/, '');
+const API_BASE = normalizedApiUrl.endsWith('/api') ? normalizedApiUrl : normalizedApiUrl + '/api';
 
 // Product API calls
 export const productApi = {
@@ -9,7 +11,7 @@ export const productApi = {
       if (params?.search) queryString.append('search', params.search);
       if (params?.sort) queryString.append('sort', params.sort);
 
-      const response = await fetch(`${API_URL}/products?${queryString.toString()}`);
+      const response = await fetch(`${API_BASE}/products?${queryString.toString()}`);
       if (!response.ok) throw new Error('Failed to fetch products');
       return await response.json();
     } catch (error) {
@@ -20,7 +22,7 @@ export const productApi = {
 
   getById: async (id: string) => {
     try {
-      const response = await fetch(`${API_URL}/products/${id}`);
+      const response = await fetch(`${API_BASE}/products/${id}`);
       if (!response.ok) throw new Error('Failed to fetch product');
       return await response.json();
     } catch (error) {
@@ -31,7 +33,7 @@ export const productApi = {
 
   getBySlug: async (slug: string) => {
     try {
-      const response = await fetch(`${API_URL}/products/slug/${slug}`);
+      const response = await fetch(`${API_BASE}/products/slug/${slug}`);
       if (!response.ok) throw new Error('Failed to fetch product');
       return await response.json();
     } catch (error) {
@@ -45,7 +47,7 @@ export const productApi = {
 export const categoryApi = {
   getAll: async () => {
     try {
-      const response = await fetch(`${API_URL}/categories`);
+      const response = await fetch(`${API_BASE}/categories`);
       if (!response.ok) throw new Error('Failed to fetch categories');
       return await response.json();
     } catch (error) {
@@ -56,7 +58,7 @@ export const categoryApi = {
 
   getBySlug: async (slug: string) => {
     try {
-      const response = await fetch(`${API_URL}/categories/${slug}`);
+      const response = await fetch(`${API_BASE}/categories/${slug}`);
       if (!response.ok) throw new Error('Failed to fetch category');
       return await response.json();
     } catch (error) {
@@ -77,7 +79,7 @@ export const contactApi = {
     message: string;
   }) => {
     try {
-      const response = await fetch(`${API_URL}/contact`, {
+      const response = await fetch(`${API_BASE}/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -96,3 +98,6 @@ export const contactApi = {
     }
   },
 };
+
+
+
